@@ -63,11 +63,20 @@ public class BoatCharacterMovement : MonoBehaviour
             MoveAndRotateBoat();
         }
 
+        float triggerUsed = Input.GetAxis("FeetP" + GetPlayerNumber());
         string controllerButton = GetControllerButtonExpected();
         if (Input.GetButtonDown(controllerButton))
         {
             _leftFootNext = !_leftFootNext;
             MoveAndRotateBoat();
+        }
+        else if (triggerUsed != 0)
+        {
+            if (triggerUsed > 0 && _leftFootNext || triggerUsed < 0 && !_leftFootNext)
+            {
+                _leftFootNext = !_leftFootNext;
+                MoveAndRotateBoat();
+            }
         }
 
         //else if (Input.GetKeyDown(KeyCode.Space))
@@ -85,15 +94,7 @@ public class BoatCharacterMovement : MonoBehaviour
 
     private string GetControllerButtonExpected()
     {
-        string playerNumber = "";
-        if (_player == Player.Player2)
-        {
-            playerNumber = _isRightSide ? "4" : "3";
-        }
-        else
-        {
-            playerNumber = _isRightSide ? "2" : "1";
-        }
+        string playerNumber = GetPlayerNumber();
 
         if (_leftFootNext)
         {
@@ -105,6 +106,20 @@ public class BoatCharacterMovement : MonoBehaviour
             //Debug.Log("I am boat " + _player + " and right side is " + _isRightSide + ". My final string I'm waiting for is " + ("RightFootP" + playerNumber));
             return "RightFootP" + playerNumber;
         }
+    }
+
+    private string GetPlayerNumber()
+    {
+        string playerNumber = "0";
+        if (_player == Player.Player2)
+        {
+            playerNumber = _isRightSide ? "4" : "3";
+        }
+        else
+        {
+            playerNumber = _isRightSide ? "2" : "1";
+        }
+        return playerNumber;
     }
 
     void MoveAndRotateBoat()

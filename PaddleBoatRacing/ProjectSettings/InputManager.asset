@@ -421,3 +421,67 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 4
+  - serializedVersion: 3
+    m_Name: FeetP1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.1
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 2
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: FeetP2
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.1
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 2
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: FeetP3
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.1
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 2
+    joyNum: 3
+  - serializedVersion: 3
+    m_Name: FeetP4
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.1
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 2
+    joyNum: 4
