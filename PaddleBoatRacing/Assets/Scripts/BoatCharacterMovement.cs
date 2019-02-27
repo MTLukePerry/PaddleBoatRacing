@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BoatCharacterMovement : MonoBehaviour
 {
+    public static bool _oneTapMode = false;
+
     [SerializeField] private Player _player = Player.None;
     [SerializeField] private bool _isRightSide;
     [SerializeField] private GameObject _forceFrom;
@@ -59,7 +61,10 @@ public class BoatCharacterMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(_expectedNextMovement))
         {
-            _expectedNextMovement = _characterKeys.Find((k) => { return k != _expectedNextMovement; });
+            if (!_oneTapMode)
+            {
+                _expectedNextMovement = _characterKeys.Find((k) => { return k != _expectedNextMovement; });
+            }
             MoveAndRotateBoat();
         }
 
