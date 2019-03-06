@@ -130,6 +130,7 @@ MonoBehaviour:
   _forceFrom: {fileID: 1834498142008812}
   _movementSpeed: 400000
   _manualForcedDeceleration: 1
+  _movementSpeedDecreaseOnHoldMode: 350000
 --- !u!114 &114632287870683340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -200,6 +201,7 @@ MonoBehaviour:
   _forceFrom: {fileID: 1559304657597628}
   _movementSpeed: 400000
   _manualForcedDeceleration: 1
+  _movementSpeedDecreaseOnHoldMode: 350000
 --- !u!222 &222217812810770230
 CanvasRenderer:
   m_ObjectHideFlags: 1

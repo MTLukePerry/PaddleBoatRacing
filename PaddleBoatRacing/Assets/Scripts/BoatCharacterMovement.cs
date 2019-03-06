@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BoatCharacterMovement : MonoBehaviour
 {
-    public static bool _oneTapMode = false;
+    public static bool OneTapMode = false;
+    public static bool OneTapAllowHold = false;
 
     [SerializeField] private Player _player = Player.None;
     [SerializeField] private bool _isRightSide;
@@ -18,7 +19,11 @@ public class BoatCharacterMovement : MonoBehaviour
     [SerializeField] private float _movementSpeed = 80000;
     [SerializeField] private float _manualForcedDeceleration = 0.9989f;
 
+    [Header("One Tap Vars")]
+    [SerializeField] private float _movementSpeedDecreaseOnHoldMode = 50000f;
+
     private bool _leftFootNext = true;
+    private bool _oneTapAwaitingStillness = false;
 
     void Start()
     {
@@ -61,26 +66,64 @@ public class BoatCharacterMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(_expectedNextMovement))
         {
-            if (!_oneTapMode)
+            if (!OneTapMode)
             {
                 _expectedNextMovement = _characterKeys.Find((k) => { return k != _expectedNextMovement; });
             }
             MoveAndRotateBoat();
         }
 
-        float triggerUsed = Input.GetAxis("FeetP" + GetPlayerNumber());
-        string controllerButton = GetControllerButtonExpected();
-        if (Input.GetButtonDown(controllerButton))
+        if (!OneTapMode)
         {
-            _leftFootNext = !_leftFootNext;
-            MoveAndRotateBoat();
-        }
-        else if (triggerUsed != 0)
-        {
-            if (triggerUsed > 0 && _leftFootNext || triggerUsed < 0 && !_leftFootNext)
+            float triggerUsed = Input.GetAxis("FeetP" + GetPlayerNumber());
+            string controllerButton = GetControllerButtonExpected();
+            if (Input.GetButtonDown(controllerButton))
             {
                 _leftFootNext = !_leftFootNext;
                 MoveAndRotateBoat();
+            }
+            else if (triggerUsed != 0)
+            {
+                if (triggerUsed > 0 && _leftFootNext || triggerUsed < 0 && !_leftFootNext)
+                {
+                    _leftFootNext = !_leftFootNext;
+                    MoveAndRotateBoat();
+                }
+            }
+        }
+        else
+        {
+            if (!_isRightSide)
+            {
+                float triggerUsed = Input.GetAxis("LeftPaddleP" + GetPlayerNumberOneTap());
+                if (triggerUsed != 0)
+                {
+                    if (!_oneTapAwaitingStillness || OneTapAllowHold)
+                    {
+                        _oneTapAwaitingStillness = true;
+                        MoveAndRotateBoat();
+                    }
+                }
+                else
+                {
+                    _oneTapAwaitingStillness = false;
+                }
+            }
+            else
+            {
+                float triggerUsed = Input.GetAxis("RightPaddleP" + GetPlayerNumberOneTap());
+                if (triggerUsed != 0)
+                {
+                    if (!_oneTapAwaitingStillness || OneTapAllowHold)
+                    {
+                        _oneTapAwaitingStillness = true;
+                        MoveAndRotateBoat();
+                    }
+                }
+                else
+                {
+                    _oneTapAwaitingStillness = false;
+                }
             }
         }
 
@@ -127,26 +170,32 @@ public class BoatCharacterMovement : MonoBehaviour
         return playerNumber;
     }
 
+    private string GetPlayerNumberOneTap()
+    {
+        string playerNumber = "0";
+        if (_player == Player.Player2)
+        {
+            playerNumber = "2";
+        }
+        else
+        {
+            playerNumber = "1";
+        }
+        return playerNumber;
+    }
+
     void MoveAndRotateBoat()
     {
         if (_rb != null)
         {
-            //if (!_isRightSide)
-            //{
-            //    //_rb.AddTorque(_torqueSpeed * Time.deltaTime);
-            //    transform.RotateAround(gameObject.transform.position, new Vector3(0, 0, 1), 2);
-            //}
-            //else
-            //{
-            //    //_rb.AddTorque(-_torqueSpeed * Time.deltaTime);
-            //    transform.RotateAround(gameObject.transform.position, new Vector3(0, 0, 1), -2);
-            //}
-
-            //var angle = Vector2.Angle(transform.up, transform.right) / 9;
-            //angle = _isRightSide ? -angle : angle;
             var moveDirection = transform.right;
-            //transform.position += transform.right * 10;
-            _rb.AddForceAtPosition(moveDirection * _movementSpeed * Time.deltaTime, _forceFrom.transform.position);
+            float movementPower = _movementSpeed;
+            if (OneTapAllowHold)
+            {
+                movementPower -= _movementSpeedDecreaseOnHoldMode;
+            }
+
+            _rb.AddForceAtPosition(moveDirection * movementPower * Time.deltaTime, _forceFrom.transform.position);
         }
     }
 }

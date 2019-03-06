@@ -8,6 +8,9 @@ public class GameModeManager : MonoBehaviour
 
     [SerializeField] private TextMesh _timeText;
 
+    [SerializeField] private bool _oneTapEnabled;
+    [SerializeField] private bool _oneTapHoldModeEnabled;
+
     private bool _countTimer = true;
     private float _timer;
 
@@ -18,7 +21,8 @@ public class GameModeManager : MonoBehaviour
 
     void Start()
     {
-
+        BoatCharacterMovement.OneTapMode = _oneTapEnabled;
+        BoatCharacterMovement.OneTapAllowHold = _oneTapHoldModeEnabled;
     }
 
     void Update ()
