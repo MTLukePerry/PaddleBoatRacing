@@ -96,7 +96,7 @@ public class BoatCharacterMovement : MonoBehaviour
             if (!_isRightSide)
             {
                 float triggerUsed = Input.GetAxis("LeftPaddleP" + GetPlayerNumberOneTap());
-                if (triggerUsed != 0)
+                if (triggerUsed > 0.2)
                 {
                     if (!_oneTapAwaitingStillness || OneTapAllowHold)
                     {
@@ -112,7 +112,7 @@ public class BoatCharacterMovement : MonoBehaviour
             else
             {
                 float triggerUsed = Input.GetAxis("RightPaddleP" + GetPlayerNumberOneTap());
-                if (triggerUsed != 0)
+                if (triggerUsed > 0.2)
                 {
                     if (!_oneTapAwaitingStillness || OneTapAllowHold)
                     {
