@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameModeManager : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public class GameModeManager : MonoBehaviour
             _timer += Time.deltaTime;
         }
         _timeText.text = _timer.ToString();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void StopTimer()

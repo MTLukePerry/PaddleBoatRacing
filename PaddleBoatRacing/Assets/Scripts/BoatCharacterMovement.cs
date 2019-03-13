@@ -42,6 +42,14 @@ public class BoatCharacterMovement : MonoBehaviour
             {
                 _characterKeys = new List<KeyCode>() { KeyCode.LeftArrow, KeyCode.DownArrow };
             }
+            else if (_player == Player.Player3)
+            {
+                _characterKeys = new List<KeyCode>() { KeyCode.LeftArrow, KeyCode.DownArrow };
+            }
+            else if (_player == Player.Player4)
+            {
+                _characterKeys = new List<KeyCode>() { KeyCode.LeftArrow, KeyCode.DownArrow };
+            }
         }
         else
         {
@@ -54,6 +62,14 @@ public class BoatCharacterMovement : MonoBehaviour
                 _characterKeys = new List<KeyCode>() { KeyCode.N, KeyCode.M };
             }
             else if (_player == Player.Player2)
+            {
+                _characterKeys = new List<KeyCode>() { KeyCode.Keypad2, KeyCode.Keypad3 };
+            }
+            else if (_player == Player.Player3)
+            {
+                _characterKeys = new List<KeyCode>() { KeyCode.Keypad2, KeyCode.Keypad3 };
+            }
+            else if (_player == Player.Player4)
             {
                 _characterKeys = new List<KeyCode>() { KeyCode.Keypad2, KeyCode.Keypad3 };
             }
@@ -159,7 +175,15 @@ public class BoatCharacterMovement : MonoBehaviour
     private string GetPlayerNumber()
     {
         string playerNumber = "0";
-        if (_player == Player.Player2)
+        if (_player == Player.Player4)
+        {
+            playerNumber = _isRightSide ? "7" : "8";
+        }
+        else if (_player == Player.Player3)
+        {
+            playerNumber = _isRightSide ? "5" : "6";
+        }
+        else if (_player == Player.Player2)
         {
             playerNumber = _isRightSide ? "4" : "3";
         }
@@ -173,7 +197,15 @@ public class BoatCharacterMovement : MonoBehaviour
     private string GetPlayerNumberOneTap()
     {
         string playerNumber = "0";
-        if (_player == Player.Player2)
+        if (_player == Player.Player4)
+        {
+            playerNumber = "4";
+        }
+        else if (_player == Player.Player3)
+        {
+            playerNumber = "3";
+        }
+        else if (_player == Player.Player2)
         {
             playerNumber = "2";
         }
@@ -204,5 +236,7 @@ public enum Player
 {
     None,
     Player1,
-    Player2
+    Player2,
+    Player3,
+    Player4
 }
